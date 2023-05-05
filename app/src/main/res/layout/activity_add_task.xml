@@ -22,14 +22,14 @@
                 android:id="@+id/imageToUpload"
                 android:layout_width="101dp"
                 android:layout_height="101dp"
-                android:src="@drawable/ic_launcher_background"
+                android:src="@drawable/placeholder"
                 app:civ_border_color="#E1AD01"
                 app:civ_border_width="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.514"
+                app:layout_constraintVertical_bias="0.457"
                 tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -201,19 +201,22 @@
 
                 <TextView
                     android:id="@+id/textcolorpick"
-                    android:layout_width="172dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
                     android:gravity="center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="15dp"
                     android:text="@string/set_task_color"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/colorpick"
-                    android:layout_width="143dp"
-                    android:layout_height="40dp"
+                    android:inputType="textNoSuggestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center|end"
-                    android:text="@string/click_to_set_color"
+                    android:hint="@string/click_to_set_color"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textColorHint="@android:color/holo_orange_dark"
                     app:drawableEndCompat="@drawable/righticon"
@@ -221,7 +224,7 @@
 
                 <TextView
                     android:id="@+id/colorpreview"
-                    android:layout_width="52dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:background="@android:color/holo_red_dark"
                     android:textColor="#FFFFFF" />

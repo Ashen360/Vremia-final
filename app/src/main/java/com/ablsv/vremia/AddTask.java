@@ -3,6 +3,7 @@ package com.ablsv.vremia;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -11,7 +12,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -41,6 +45,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
     Button bSaveTask;
     private static final int RESULT_LOAD_IMAGE = 1;
     private Bitmap selectedImageBitmap;
+    private EditText edittext;
 
 
     @SuppressLint("CutPasteId")
@@ -49,6 +54,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         taskName = findViewById(R.id.taskNameInput);
+        colorprev = findViewById(R.id.colorpreview);
         taskDesc = findViewById(R.id.descInput);
         colorpick = findViewById(R.id.colorpick);
         datepick = findViewById(R.id.datepick);
@@ -59,6 +65,62 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
         Button taskBtn = findViewById(R.id.bSaveTask);
 
         colorpick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(AddTask.this, "Type the hexadecimal code\nof your color\nwithout alpha values.", Toast.LENGTH_LONG).show();
+            }
+        });
+        colorpick.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                String colorinput;
+                int colorinput2;
+                if(i == EditorInfo.IME_ACTION_DONE)
+                {
+                    colorinput = textView.getText().toString();
+                    if(colorinput == null)
+                    {
+                        colorinput = "000000";
+                    }
+                    if(colorinput.length()>=7 || !colorinput.matches("-?[0-9a-fA-F]+"))
+                    {
+                        colorinput = "000000";
+                    }
+                    colorinput2 = Color.parseColor("#FF"+colorinput);
+                    colorprev.setBackgroundColor(colorinput2);
+                    return true;
+
+                }
+                else {
+                    return false;
+                }
+            }
+        });
+        colorpick.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                String colorinput;
+                int colorinput2;
+                if(!b)
+                {
+                    colorpick = (EditText)view;
+                    colorinput = colorpick.getText().toString();
+                    if(colorinput == null)
+                    {
+                        colorinput = "000000";
+                    }
+                    if(colorinput.length()>=7 || !colorinput.matches("-?[0-9a-fA-F]+"))
+                    {
+                        colorinput = "000000";
+                    }
+                    colorinput2 = Color.parseColor("#FF"+colorinput);
+                    colorprev.setBackgroundColor(colorinput2);
+                }
+            }
+        });
+
+
+        colorprev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openColorPicker();
@@ -118,6 +180,7 @@ public class AddTask extends AppCompatActivity implements DatePickerDialog.OnDat
                 imageToUpload.setImageURI(Uri.parse(""));
 
                 gotoHome();
+                finish();
             }
         });
 
